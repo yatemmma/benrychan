@@ -1,13 +1,13 @@
 {
   "manifest_version": 2,
   "name": "benrychan",
-  "version": "0.0.1",
+  "version": "0.0.2",
 
   "description": "Make benry to your work.",
   "icons": {"48": "icon48.png"},
   "author": "yatemmma",
 
-  "update_url": "http://myhost.com/mytestextension/updates.xml"
+  "update_url": "https://raw.github.com/yatemmma/benrychan/master/updates.xml",
 
   "permissions": ["tabs", "http://*/*", "https://*/*"],
 
