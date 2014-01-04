@@ -7,6 +7,8 @@
   "icons": {"48": "icon48.png"},
   "author": "yatemmma",
 
+  "update_url": "http://myhost.com/mytestextension/updates.xml"
+
   "permissions": ["tabs", "http://*/*", "https://*/*"],
 
   "options_page" : "options.html",
