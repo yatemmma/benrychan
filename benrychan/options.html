@@ -2,8 +2,40 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
+  <script src="jquery.2.0.3.js"></script>
+  <script src="benrychan.js"></script>
+  <script src="options.js"></script>
+  <style>
+    a {text-decoration: underline; cursor: pointer;}
+    .action-link {margin-left: 16px;}
+    #template-list {float: left; width: 300px;}
+    #template {float: left; width: 400px; height: 400px; margin-left: 16px}
+    #type-list {float: left; margin-left: 16px}
+    #template-title input  {width: 80%;}
+    #template-body textarea {width: 100%; height: 400px;}
+    .selected {font-weight: bold;}
+  </style>
 </head>
 <body>
-option page.
+<div id="template-list">
+  <span class="section-title">templates</span><a id="add" class="action-link">+ add</a>
+  <ul>
+  </ul>
+</div>
+<div id="template">
+  <span class="section-title">template</span><a id="delete" class="action-link">× delete</a>
+  <div id="template-title">
+  	title: <input type="text" />
+  </div>
+  <div id="template-types">
+    <p>types: github-page, issues, hogehoge, hogehoge, hogehoge, hogehoge</p>	
+  </div>
+  <div id="template-body">
+  	<textarea wrap="off"></textarea>
+  </div>
+</div>
+<div id="type-list">
+  <span class="section-title">types</span><a class="action-link"></a>
+</div>
 </body>
 </html>
