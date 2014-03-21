@@ -1,7 +1,7 @@
 function Template() {
   this.id = new Date().getTime();
   this.title = "new template";
-  this.types = ["aaa", "bbb"];
+  this.types = [];
   this.body = "aaaaaaaaaaa";
 }
 
@@ -17,8 +17,17 @@ Template.fromJson = function(obj) {
   return template;
 }
 
-function Type() {
-  this.name;
+function Type(name) {
+  this.name = name;
   this.code;
   this.params;
+}
+
+Type.getTypes = function() {
+  var types = {};
+  var userDefined = new Type("user_defined");
+  types[userDefined.name] = userDefined;
+  var common = new Type("common");
+  types[common.name] = common;
+  return types;
 }

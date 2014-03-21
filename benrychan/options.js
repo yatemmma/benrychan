@@ -6,6 +6,7 @@ $(function() {
   setDeleteLink();
   setEditListener();
   setTemplates();
+  setTypes();
 });
 
 function setAddLink() {
@@ -23,10 +24,12 @@ function setAddLink() {
 function setDeleteLink() {
   $("#delete").click(function() {
     clearTemplate();
+    if (!selectedTemplate) return;
     bg.deleteTemplate(selectedTemplate);
     selectedTemplate = null;
-    $(".selected").parent().animate({opacity:"hide"}, 1000, "swing", function(){$(this).remove()});
-    // TODO save
+    $(".selected").parent().animate({opacity:"hide"}, 1000, "swing", function() {
+      $(this).remove()
+    });
   });
 }
 
@@ -49,8 +52,24 @@ function setTemplates() {
     var $a = $("<a></a>").text(template.title).click(function() {
       onClickTemplateLink(this, template);
     });
-    $("ul").append($("<li></li>").append($a));
+    $("#template-list ul").append($("<li></li>").append($a));
   });
+}
+
+function setTypes() {
+  var types = bg.getTypes();
+  for (var key in types) {
+  	var type = types[key];
+    var $input = $('<input type="checkbox" name="types" />').val(type.name).click(function() {
+      if (!selectedTemplate) return;
+      selectedTemplate.types = $("input:checkbox:checked").map(function() {
+      	return $(this).val()
+      }).get();
+      bg.updateTemplate(selectedTemplate);
+      $("#template-types p").text("types: " + selectedTemplate.types.join(", "));
+    });
+    $("#type-list ul").append($("<li></li>").append($("<label></label>").append($input).append(" "+type.name)));
+  }
 }
 
 function onClickTemplateLink(element, template) {
@@ -62,12 +81,18 @@ function onClickTemplateLink(element, template) {
 
 function displayTemplate(template) {
   $("#template-title input").val(template.title);
-  $("#template-types p").text("types: " + template.types.join(","));
+  $("#template-types p").text("types: " + template.types.join(", "));
   $("#template-body textarea").val(template.body);
+  $("input:checkbox").each(function() {
+  	var checked = ($.inArray($(this).val(), selectedTemplate.types) >= 0);
+  	$(this).attr("checked", checked);
+  });
+
 }
 
 function clearTemplate() {
   $("#template-title input").val("");
   $("#template-types p").text("types: ");
   $("#template-body textarea").val("");
+  $("input:checkbox").attr("checked", false);
 }

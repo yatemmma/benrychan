@@ -51,6 +51,10 @@ function getTemplates() {
   return templates;
 }
 
+function getTypes() {
+  return Type.getTypes();
+}
+
 function executeTemplate(template, callback) {
   // TODO
   var result = "xxxxxxxx:" + template.title;
