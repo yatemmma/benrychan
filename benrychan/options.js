@@ -12,6 +12,7 @@ function setAddLink() {
       onClickTemplateLink(this);
     });
     $("#template-list ul").append($("<li></li>").append($a));
+    $a.click();
     // TODO save
   });
 }
@@ -44,4 +45,6 @@ function onClickTemplateLink(element) {
 
 function displayTemplate(template) {
   $("#template-title input").val(template.title);
+  $("#template-types p").text("types: " + template.types.join(","));
+  $("#template-body textarea").val(template.body);
 }
