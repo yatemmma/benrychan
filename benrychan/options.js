@@ -87,7 +87,6 @@ function displayTemplate(template) {
   	var checked = ($.inArray($(this).val(), selectedTemplate.types) >= 0);
   	$(this).attr("checked", checked);
   });
-
 }
 
 function clearTemplate() {

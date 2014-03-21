@@ -25,9 +25,9 @@ function Type(name) {
 
 Type.getTypes = function() {
   var types = {};
-  var userDefined = new Type("user_defined");
-  types[userDefined.name] = userDefined;
   var common = new Type("common");
   types[common.name] = common;
+  var userDefined = new Type("user_defined");
+  types[userDefined.name] = userDefined;
   return types;
 }
