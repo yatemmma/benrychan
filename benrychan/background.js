@@ -1,3 +1,5 @@
+var templates = [];
+
 function openOptionPage() {
   chrome.tabs.create({
   	"url": chrome.extension.getURL(chrome.app.getDetails().options_page)
@@ -6,21 +8,22 @@ function openOptionPage() {
 
 function getTemplates() {
   // TODO 
-  var templateList = [
-  	new Template("tmpl1"),
-  	new Template("tmpl2"),
-  	new Template("tmpl3"),
+  templates = [
+  	_createTemplate("111"),
+  	_createTemplate("112"),
+  	_createTemplate("113"),
   ];
-  return templateList;
+  return templates;
+}
+
+function _createTemplate(title) {
+  var t = new Template();
+  t.title = title;
+  return t;
 }
 
 function executeTemplate(template, callback) {
   // TODO
   var result = "xxxxxxxx:" + template.title;
   callback(result);
-}
-
-function getTemplate(title) {
-  // TODO
-  return new Template(title);
 }

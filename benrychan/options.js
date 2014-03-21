@@ -1,4 +1,5 @@
 var bg = chrome.extension.getBackgroundPage();
+var selectedTemplate = null;
 
 $(function() {
   setAddLink();
@@ -8,8 +9,9 @@ $(function() {
 
 function setAddLink() {
   $("#add").click(function() {
-  	var $a = $("<a></a>").text("new template").click(function() {
-      onClickTemplateLink(this);
+  	var newTemplate = new Template();
+  	var $a = $("<a></a>").text(newTemplate.title).click(function() {
+      onClickTemplateLink(this, newTemplate);
     });
     $("#template-list ul").append($("<li></li>").append($a));
     $a.click();
@@ -19,7 +21,8 @@ function setAddLink() {
 
 function setDeleteLink() {
   $("#delete").click(function() {
-    displayTemplate(new Template(""));
+    clearTemplate();
+    selectedTemplate = null;
     $(".selected").parent().animate({opacity:"hide"}, 1000, "swing", function(){$(this).remove()});
     // TODO save
   });
@@ -36,10 +39,10 @@ function setTemplates() {
   });
 }
 
-function onClickTemplateLink(element) {
+function onClickTemplateLink(element, template) {
+  selectedTemplate = template;
   $("#template-list ul li a").removeClass("selected");
   $(element).addClass("selected");
-  var template = bg.getTemplate($(element).text());
   displayTemplate(template);
 }
 
@@ -47,4 +50,10 @@ function displayTemplate(template) {
   $("#template-title input").val(template.title);
   $("#template-types p").text("types: " + template.types.join(","));
   $("#template-body textarea").val(template.body);
+}
+
+function clearTemplate() {
+  $("#template-title input").val("");
+  $("#template-types p").text("types: ");
+  $("#template-body textarea").val("");
 }
