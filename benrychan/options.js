@@ -43,6 +43,9 @@ function setEditListener() {
   	selectedTemplate.body = $(this).val();
   	bg.updateTemplate(selectedTemplate);
   });
+  $("#type-list textarea").on("input", function() {
+  	bg.setUserDefined($(this).val());
+  });
 }
 
 function setTemplates() {
@@ -70,6 +73,7 @@ function setTypes() {
     });
     $("#type-list ul").append($("<li></li>").append($("<label></label>").append($input).append(" "+type.name)));
   }
+  $("#type-list textarea").val(bg.getUserDefined());
 }
 
 function onClickTemplateLink(element, template) {

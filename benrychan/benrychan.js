@@ -1,3 +1,5 @@
+var PREFIX = "benrychan-";
+
 function Template() {
   this.id = new Date().getTime();
   this.title = "new template";
@@ -56,12 +58,7 @@ var sample = new Type("sample", "a, b",
   }
 );
 
-var user_defined = new Type("user_defined", "a, b",
-  function() {
-    var result = {
-      c:333,
-      b:444
-    };
-    return result;
-  }
-);
+var user_defined = new Type("user_defined", "a, b", function(){});
+user_defined.code = JSON.parse(localStorage[PREFIX + "userDefined"] || null);
+// TODO 読み込み時がずっとのこる
+// TODO ロードすると全部それになる

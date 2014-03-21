@@ -1,5 +1,3 @@
-var PREFIX = "benrychan-";
-
 var templates = loadTemplates();
 var types = Type.getTypes();
 var callback_tmp = null;
@@ -18,7 +16,7 @@ function saveTemplates() {
 }
 
 function loadTemplates() {
-  var jsonArray = JSON.parse(localStorage[PREFIX + "templates"]);
+  var jsonArray = JSON.parse(localStorage[PREFIX + "templates"] || "[]");
   var templates = jsonArray.map(function(json) {
   	return Template.fromJson(JSON.parse(json));
   })
@@ -55,6 +53,14 @@ function getTemplates() {
 
 function getTypes() {
   return types;
+}
+
+function getUserDefined() {
+  return JSON.parse(localStorage[PREFIX + "userDefined"] || null);
+}
+
+function setUserDefined(text) {
+  localStorage[PREFIX + "userDefined"] = JSON.stringify(text);
 }
 
 function executeTemplate(template, callback) {
