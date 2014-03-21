@@ -1,6 +1,7 @@
 var PREFIX = "benrychan-";
 
 var templates = loadTemplates();
+var callback_tmp = null;
 
 function openOptionPage() {
   chrome.tabs.create({
@@ -56,7 +57,51 @@ function getTypes() {
 }
 
 function executeTemplate(template, callback) {
-  // TODO
-  var result = "xxxxxxxx:" + template.title;
-  callback(result);
+  callback_tmp = callback;
+  recursiveExecute(template, [].concat(template.types), []);
+}
+
+function recursiveExecute(template, executeTypes, results) {
+  if (executeTypes.length == 0) {
+    executeCallback(template, results);
+  }
+  chrome.tabs.executeScript(null, { file: "jquery.2.0.3.js" }, function() {
+    chrome.tabs.executeScript(null, { code: getExecuteCode(executeTypes.shift()) }, function(resultObj) {
+      // TODO String判定
+      console.log(resultObj);
+      recursiveExecute(template, [].concat(executeTypes), results.concat(resultObj[0]));
+    });
+  });
+}
+
+function getExecuteCode(type) {
+  console.log(type);
+  if (!type) {
+    var execute1 = "return {};";
+  } else if (type == "common") {
+    var execute1 = "console.log(1); return {a:1, b:2};";
+  } else {
+  	var execute1 = "console.log(2); return {b:3, c:222};";
+  }
+  var code = "(function(){ try {" + execute1 + "} catch(e) { return e.stack; } })();";
+  return code;
+}
+
+function executeCallback(template, results) {
+  var text = template.body;
+  results.forEach(function(result) {
+    text = replaceText(text, result);
+  });
+  callback_tmp(text);
+  callback_tmp = null;
+}
+
+function replaceText(templateBody, params) {
+  if (!params) return templateBody;
+  for (var key in params) {
+  	console.log(key);
+    var reg = new RegExp("%{" + key + "}", "g");
+    templateBody = templateBody.replace(reg, params[key]);
+  }
+  return templateBody;
 }
