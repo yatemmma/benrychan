@@ -4,6 +4,7 @@ var selectedTemplate = null;
 $(function() {
   setAddLink();
   setDeleteLink();
+  setEditListener();
   setTemplates();
 });
 
@@ -11,7 +12,6 @@ function setAddLink() {
   $("#add").click(function() {
   	var newTemplate = new Template();
   	bg.addTemplate(newTemplate);
-  	bg.saveTemplates();
   	var $a = $("<a></a>").text(newTemplate.title).click(function() {
       onClickTemplateLink(this, newTemplate);
     });
@@ -23,9 +23,22 @@ function setAddLink() {
 function setDeleteLink() {
   $("#delete").click(function() {
     clearTemplate();
+    bg.deleteTemplate(selectedTemplate);
     selectedTemplate = null;
     $(".selected").parent().animate({opacity:"hide"}, 1000, "swing", function(){$(this).remove()});
     // TODO save
+  });
+}
+
+function setEditListener() {
+  $("#template-title input").on("input", function() {
+  	selectedTemplate.title = $(this).val();
+  	$(".selected").text(selectedTemplate.title);
+  	bg.updateTemplate(selectedTemplate);
+  });
+  $("#template-body textarea").on("input", function() {
+  	selectedTemplate.body = $(this).val();
+  	bg.updateTemplate(selectedTemplate);
   });
 }
 
