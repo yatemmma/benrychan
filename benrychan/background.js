@@ -1,6 +1,7 @@
 var PREFIX = "benrychan-";
 
 var templates = loadTemplates();
+var types = Type.getTypes();
 var callback_tmp = null;
 
 function openOptionPage() {
@@ -53,12 +54,12 @@ function getTemplates() {
 }
 
 function getTypes() {
-  return Type.getTypes();
+  return types;
 }
 
 function executeTemplate(template, callback) {
   callback_tmp = callback;
-  recursiveExecute(template, [].concat(template.types), []);
+  recursiveExecute(template, [].concat(template.types.reverse()), []);
 }
 
 function recursiveExecute(template, executeTypes, results) {
@@ -66,24 +67,20 @@ function recursiveExecute(template, executeTypes, results) {
     executeCallback(template, results);
   }
   chrome.tabs.executeScript(null, { file: "jquery.2.0.3.js" }, function() {
-    chrome.tabs.executeScript(null, { code: getExecuteCode(executeTypes.shift()) }, function(resultObj) {
-      // TODO String判定
-      console.log(resultObj);
-      recursiveExecute(template, [].concat(executeTypes), results.concat(resultObj[0]));
+    chrome.tabs.executeScript(null, { code: getExecuteCode(executeTypes.shift()) }, function(result) {
+      console.log(result);
+      if (typeof result[0] == 'string') {
+        callback_tmp(result[0]);
+      } else {
+        recursiveExecute(template, [].concat(executeTypes), results.concat(result[0]));
+      }
     });
   });
 }
 
 function getExecuteCode(type) {
-  console.log(type);
-  if (!type) {
-    var execute1 = "return {};";
-  } else if (type == "common") {
-    var execute1 = "console.log(1); return {a:1, b:2};";
-  } else {
-  	var execute1 = "console.log(2); return {b:3, c:222};";
-  }
-  var code = "(function(){ try {" + execute1 + "} catch(e) { return e.stack; } })();";
+  var execute = (!type || !types[type]) ? "return {};" : types[type].code;
+  var code = "(function(){ try {" + execute + "} catch(e) { return e.stack; } })();";
   return code;
 }
 

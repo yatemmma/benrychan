@@ -2,7 +2,7 @@ function Template() {
   this.id = new Date().getTime();
   this.title = "new template";
   this.types = [];
-  this.body = "aaaaaaaaaaa";
+  this.body = "";
 }
 
 Template.prototype.json = function() {
@@ -17,17 +17,51 @@ Template.fromJson = function(obj) {
   return template;
 }
 
-function Type(name) {
+function Type(name, params, func) {
   this.name = name;
-  this.code;
-  this.params;
+  this.params = params;
+  this.code = func.toString().substr(14).slice(0, -1);
 }
 
 Type.getTypes = function() {
   var types = {};
-  var common = new Type("common");
-  types[common.name] = common;
-  var userDefined = new Type("user_defined");
-  types[userDefined.name] = userDefined;
+  [
+    common,
+    sample,
+    user_defined
+  ]
+   .forEach(function(type) {
+    types[type.name] = type;	
+  });
   return types;
 }
+
+var common = new Type("common", "a, b",
+  function() {
+    var result = {
+      a:11111111111,
+      b:2
+    };
+    return result;
+  }
+);
+
+var sample = new Type("sample", "a, b",
+  function() {
+    var result = {
+      a:"sample",
+      b:"howaaaaaaa"
+    };
+    return result;
+  }
+);
+
+var user_defined = new Type("user_defined", "a, b",
+  function() {
+    var result = {
+      c:333,
+      b:444
+    };
+    return result;
+  }
+);
