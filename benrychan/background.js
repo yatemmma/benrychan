@@ -1,4 +1,6 @@
-var templates = [];
+var PREFIX = "benrychan-";
+
+var templates = loadTemplates();
 
 function openOptionPage() {
   chrome.tabs.create({
@@ -6,13 +8,27 @@ function openOptionPage() {
   });
 }
 
-function getTemplates() {
-  // TODO 
-  templates = [
+function saveTemplates() {
+  var jsonArray = templates.map(function (template) {
+    return template.json();
+  });
+  localStorage[PREFIX + "templates"] = JSON.stringify(jsonArray);
+}
+
+function loadTemplates() {
+  var templates = [
   	_createTemplate("111"),
   	_createTemplate("112"),
   	_createTemplate("113"),
   ];
+  return templates;
+}
+
+function addTemplate(template) {
+  templates.push(template);
+}
+
+function getTemplates() {
   return templates;
 }
 

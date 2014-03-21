@@ -4,3 +4,7 @@ function Template() {
   this.types = ["aaa", "bbb"];
   this.body = "aaaaaaaaaaa";
 }
+
+Template.prototype.json = function() {
+  return JSON.stringify(this);
+}

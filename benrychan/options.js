@@ -10,12 +10,13 @@ $(function() {
 function setAddLink() {
   $("#add").click(function() {
   	var newTemplate = new Template();
+  	bg.addTemplate(newTemplate);
+  	bg.saveTemplates();
   	var $a = $("<a></a>").text(newTemplate.title).click(function() {
       onClickTemplateLink(this, newTemplate);
     });
     $("#template-list ul").append($("<li></li>").append($a));
     $a.click();
-    // TODO save
   });
 }
 
