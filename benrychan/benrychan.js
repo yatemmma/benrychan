@@ -16,3 +16,9 @@ Template.fromJson = function(obj) {
   template.body = obj.body;
   return template;
 }
+
+function Type() {
+  this.name;
+  this.code;
+  this.params;
+}

@@ -51,12 +51,6 @@ function getTemplates() {
   return templates;
 }
 
-function _createTemplate(title) {
-  var t = new Template();
-  t.title = title;
-  return t;
-}
-
 function executeTemplate(template, callback) {
   // TODO
   var result = "xxxxxxxx:" + template.title;
