@@ -2,8 +2,48 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
+  <script src="jquery.2.0.3.js"></script>
+  <script src="benrychan.js"></script>
+  <script src="options.js"></script>
+  <style>
+    a {text-decoration: underline; cursor: pointer;}
+    .action-link {margin-left: 16px;}
+    #template-list {float: left; width: 300px;}
+    #template {float: left; width: 400px; height: 400px; margin-left: 16px}
+    #type-list {float: left; margin-left: 32px; width: 320px;} 
+    #type-list textarea {width: 100%; min-width: 240px; height: 100px;}
+    #type-list ul {-webkit-padding-start: 0px;}
+    #type-list li {list-style-type: none;}
+    .type-params {font-size: small; font-style: italic; padding-left: 40px}
+    #template-title input  {width: 80%;}
+    #template-body textarea {width: 100%; height: 400px;}
+    .selected {font-weight: bold;}
+    .midashi {font-weight: bold;}
+  </style>
 </head>
 <body>
-option page.
+<div id="template-list">
+  <span class="section-title midashi">templates</span><a id="add" class="action-link">+ add</a>
+  <ul>
+  </ul>
+</div>
+<div id="template">
+  <span class="section-title midashi">template</span><a id="delete" class="action-link">× delete</a>
+  <div id="template-title">
+  	<p>title: <input type="text" /></p>
+  </div>
+  <div id="template-types">
+    <p>types: </p>	
+  </div>
+  <div id="template-body">
+  	<textarea wrap="off"></textarea>
+  </div>
+</div>
+<div id="type-list">
+  <span class="section-title midashi">types</span><a class="action-link"></a>
+  <ul>
+  </ul>
+  <textarea wrap="off"></textarea>
+</div>
 </body>
 </html>
