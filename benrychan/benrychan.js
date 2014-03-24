@@ -55,7 +55,7 @@ var github_issue = new Type("github_issue",
   function() {
     var words = document.title.split(" · ");
     var result = {
-      issue_repo: words[2].split("#").pop(),
+      issue_repo: words[2].split("#").pop().split("/").pop(),
       issue_no: words[1].split("#").pop(),
       issue_title: words[0],
       issue_labels: $("span.label").map(function(){return $(this).text();}).get().join(","),

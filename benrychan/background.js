@@ -108,26 +108,32 @@ function getExecuteCode(type) {
 
 function executeCallback(template, results) {
   var text = template.body;
-  results.forEach(function(result) {
-    text = replaceText(text, result);
-  });
+  if (text) {
+    results.forEach(function(result) {
+      text = replaceText(text, result);
+    }); 
+  } else {
+    text = allParams(results);
+  }
   callback_tmp(text);
   callback_tmp = null;
 }
 
+function allParams(results) {
+  var allParamsText = "";
+  results.forEach(function(result) {
+    for (var key in result) {
+      allParamsText = key + ": " + result[key] + "\n" + allParamsText;
+    }
+  });
+  return allParamsText;
+}
+
 function replaceText(templateBody, params) {
   if (!params) return templateBody;
-  if (!templateBody) {
-    var allParamsText = "";
-    for (var key in params) {
-      allParamsText = key + ": " + params[key] + "\n" + allParamsText;
-    }
-    return allParamsText;  
-  } else {
-    for (var key in params) {
-      var reg = new RegExp("%{" + key + "}", "g");
-      templateBody = templateBody.replace(reg, params[key]);
-    }
-    return templateBody;  
+  for (var key in params) {
+    var reg = new RegExp("%{" + key + "}", "g");
+    templateBody = templateBody.replace(reg, params[key]);
   }
+  return templateBody;  
 }
